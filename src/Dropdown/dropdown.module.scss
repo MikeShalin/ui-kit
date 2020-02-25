@@ -1,0 +1,318 @@
+@import './variables';
+
+$search-box-height:              35px    !default;
+$dropdown-indent:                8px     !default;
+$dropdown-border-radius:         20px    !default;
+$dropdown-search-box-height:     35px    !default;
+$dropdown-width:                 160px   !default;
+$top-indent:                     72px    !default;
+$dropdown-box-padding:           10px    !default;
+$dropdown-color-base:            #000000 !default;
+$dropdown-title-base:            #5f46f9 !default;
+$dropdown-background:            #ffffff !default;
+$dropdown-selected-option-light: #b9bcff !default;
+$dropdown-color-dark-hover:      #e28bda !default;
+$dropdown-color-dark:            #ffffff !default;
+$dropdown-selected-option-dark:  #5f46f9 !default;
+$dropdown-background-dark:       #858aff !default;
+
+@mixin borderBottomRadius {
+  border-radius: 0 0 $dropdown-border-radius $dropdown-border-radius;
+}
+
+@mixin transition($rotate) {
+  transition: 0.3s;
+  transform: rotate($rotate);
+}
+
+@mixin icon {
+  position: absolute;
+  right: 9px;
+}
+
+@mixin strokeDark($opacity) {
+  stroke: rgba(255, 255, 255, $opacity);
+}
+
+@mixin strokeBase($opacity) {
+  stroke: rgba(0, 0, 0, $opacity);
+}
+
+@mixin searchBorderColorDark($opacity) {
+  border-bottom: 1px dashed rgba(255, 255, 255, $opacity);
+}
+
+@mixin searchBorderColorBase($opacity) {
+  border-bottom: 1px dashed rgba(0, 0, 0, $opacity);
+}
+
+.wrapper {
+  width: $dropdown-width;
+  height: 400px;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  position: relative;
+  color: $dropdown-color-base;
+  width: 100%;
+  padding: 0;
+
+  .toggler {
+    cursor: pointer;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 0;
+    margin: auto;
+    position: relative;
+    padding: 0 $dropdown-box-padding;
+
+    svg {
+      path {
+        stroke: $dropdown-color-base;
+      }
+    }
+  }
+
+  .togglerActive {
+    border: 0;
+    background: none;
+
+    * {
+      color: $dropdown-title-base;
+    }
+
+    svg {
+      path {
+        stroke: $dropdown-title-base;
+      }
+    }
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 33px;
+      background-color: $dropdown-background;
+      border-top-right-radius: $dropdown-border-radius;
+      border-top-left-radius: $dropdown-border-radius;
+    }
+  }
+
+  .dropdownItem {
+    border-bottom: 0;
+    clear: both;
+    color: $dropdown-color-base;
+    white-space: nowrap;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    padding: $dropdown-box-padding;
+
+    span {
+      width: 100%;
+      text-align: center;
+    }
+
+    &:hover {
+      background: $dropdown-selected-option-light;
+      padding: $dropdown-box-padding;
+    }
+  }
+
+  .dropdown {
+    background: $dropdown-background;
+    color: $dropdown-color-base;
+    width: 100%;
+    z-index: 10;
+
+    * {
+      font-size: 16px;
+    }
+
+    &_active {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 4px);
+      width: 100%;
+      overflow: hidden;
+      @include borderBottomRadius;
+    }
+  }
+
+  .searchBox {
+    display: flex;
+    position: relative;
+    background: $dropdown-background;
+    height: $dropdown-search-box-height;
+    border: 0;
+    padding: 0 $dropdown-box-padding;
+    border-radius: 0;
+    z-index: 10;
+
+    .searchIcon {
+      @include icon;
+      top: 50%;
+      margin-top: -10px;
+
+      path {
+        @include strokeBase(0.7);
+      }
+    }
+
+    .searchInput {
+      padding: 3px 28px 3px 0;
+      width: 100%;
+      outline: 0;
+      color: $dropdown-color-base;
+      background: transparent;
+      border-width: 0 0 1px 0;
+
+      @include searchBorderColorBase(0.7);
+    }
+
+    &:focus-within {
+      .searchInput {
+        @include searchBorderColorBase(1);
+      }
+
+      .searchIcon,
+      path {
+        @include strokeBase(1);
+      }
+    }
+  }
+
+  .withSearch {
+    border-top: 0;
+  }
+
+  & .dropdownTop {
+    top: auto ;
+    bottom: 100% ;
+    border-radius: $dropdown-border-radius $dropdown-border-radius 0 0 ;
+    transform: translate(-50%, -5px) ;
+    border-top: 0 ;
+  }
+
+  .disabled {
+    color: rgba(0, 0, 0, .3);
+    cursor: default;
+  }
+}
+
+.selectedTitle {
+  z-index: 1;
+}
+
+.arrow {
+  @include transition(-180deg);
+  @include icon;
+}
+
+.arrowOpen {
+  @include transition(0);
+}
+
+.darkTheme {
+  color: $dropdown-color-dark;
+
+  .toggler {
+    svg {
+      path {
+        stroke: $dropdown-color-dark;
+      }
+    }
+  }
+  .togglerActive {
+    * {
+      color: $dropdown-color-dark;
+    }
+
+    svg {
+      path {
+        stroke: $dropdown-color-dark;
+      }
+    }
+
+    &::before {
+      background-color: $dropdown-background-dark;
+    }
+  }
+
+  .dropdownItem {
+    color: $dropdown-color-dark;
+
+    &:hover {
+      background: $dropdown-selected-option-dark;
+    }
+  }
+
+  .disabled {
+    color: rgba(255, 255, 255, .3);
+  }
+
+  .dropdown {
+    background: $dropdown-background-dark;
+    color: $dropdown-color-dark;
+  }
+
+  .searchBox {
+    background: $dropdown-background-dark;
+
+    .searchIcon {
+      path {
+        @include strokeDark(0.7);
+      }
+    }
+
+    .searchInput {
+      background: transparent;
+
+      @include searchBorderColorDark(0.7);
+    }
+
+    &:focus-within {
+      .searchInput {
+        @include searchBorderColorDark(1);
+      }
+
+      .searchIcon,
+      path {
+        @include strokeDark(1);
+      }
+    }
+  }
+}
+
+.optionsBox {
+  min-height: 10px;
+}
+
+.listDirectionTop {
+  .arrow {
+    margin-left: 10px;
+    margin-top: -5px;
+    top: 50%;
+
+    @include transition(0);
+  }
+
+  .arrowOpen {
+    @include transition(-180deg);
+  }
+
+  .toggler {
+    @include borderBottomRadius;
+    &::before {
+      border-radius: 0 0 $dropdown-border-radius $dropdown-border-radius;
+    }
+  }
+}
