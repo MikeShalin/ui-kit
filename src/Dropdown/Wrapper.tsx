@@ -1,13 +1,10 @@
 import React, {
-  useState,
-  useRef,
-  useEffect,
   ReactElement,
   Children,
   BaseSyntheticEvent,
-} from 'react';
+} from 'react'
 import cn from 'classnames';
-
+// @ts-ignore
 import s from './dropdown.module.scss';
 
 type TProps = {
@@ -19,45 +16,46 @@ type TProps = {
   className?: string;
 };
 
-const useDropdown = () => {
-  const [show, setShow] = useState(false);
-
-  const wrapperRef = useRef(null);
-  const clickOutside = () => setShow(false);
-  const handleClickOutside = ({ target }: any): void => {
-    const node = wrapperRef.current;
+class Wrapper extends React.Component<TProps>{
+  private readonly wrapperRef: any;
+  constructor(props: any) {
+    super(props);
+    this.wrapperRef = React.createRef();
+  }
+  state = {
+    show: false
+  };
+  setShow = (show: boolean) => this.setState({ show });
+  handleClickOutside = ({ target }: any): void => {
+    const clickOutside = () => this.setShow(false);
+    const node = this.wrapperRef.current;
     // @ts-ignore
     if (node && !node.contains(target as Node) && clickOutside) {
       clickOutside();
     }
   };
-  useEffect(() => {
-    window.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      window.removeEventListener('mousedown', handleClickOutside);
-    };
-  });
+  componentDidMount(): void {
+    window.addEventListener('mousedown', this.handleClickOutside);
+  }
+  componentWillMount(): void {
+    window.removeEventListener('mousedown', this.handleClickOutside);
+  }
 
-  return {
-    wrapperRef,
-    show,
-    setShow,
-  };
-};
-
-const Wrapper = ({ children, dark, top, search, searchCallback, className }: TProps) => {
-  const { wrapperRef, show, setShow } = useDropdown();
-  return (
-    <div
-      ref={wrapperRef}
-      className={cn(s.container, className, { [s.darkTheme]: dark }, { [s.listDirectionTop]: top })}
-    >
-      {Children.map(children, child => {
-        if (!show && child.props.list) return false;
-        return React.cloneElement(child, { show, setShow, top, search, searchCallback });
-      })}
-    </div>
-  );
-};
+  render() {
+    const { children, dark, top, search, searchCallback, className } = this.props;
+    const { show } = this.state;
+    return (
+      <div
+        ref={this.wrapperRef}
+        className={cn(s.container, className, { [s.darkTheme]: dark }, { [s.listDirectionTop]: top })}
+      >
+        {Children.map(children, child => {
+          if (!show && child.props.list) return false;
+          return React.cloneElement(child, { show, setShow: this.setShow, top, search, searchCallback });
+        })}
+      </div>
+    );
+  }
+}
 
 export default Wrapper;

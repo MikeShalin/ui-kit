@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs, text, boolean, array } from '@storybook/addon-knobs';
 
-import DropdownUI from '../Dropdown/SelectElement';
+import { SimpleDropdown } from '../Dropdown';
 
 export default {
   title: 'Dropdown',
@@ -9,7 +9,7 @@ export default {
 };
 
 export const Dropdown = () => (
-  <DropdownUI
+  <SimpleDropdown
     value={text('initialValue', 'lol')}
     options={array('options', ['lol1', 'lol', '2lol'])}
     disabledOption={array('disabledOption', ['lol1'])}
