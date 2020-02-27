@@ -20,7 +20,7 @@ type TProps = {
   top?: boolean;
 }
 
-class SelectElement extends React.Component<TProps> {
+export class SimpleDropdown extends React.Component<TProps> {
   state = {
     selectedOption: this.props.value,
     filterString: '',
@@ -84,5 +84,3 @@ class SelectElement extends React.Component<TProps> {
     );
   }
 }
-
-export default SelectElement;
