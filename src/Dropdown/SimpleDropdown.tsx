@@ -41,7 +41,6 @@ export class SimpleDropdown extends React.Component<TProps> {
     const filterOptions = options
     .filter((option: string) => option !== value)
     .filter((option: string) => option.toLowerCase().includes(filterString.toLowerCase()));
-    console.log({s})
     return (
       <div className={s.wrapper}>
         <Wrapper
@@ -53,7 +52,7 @@ export class SimpleDropdown extends React.Component<TProps> {
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           {/*
            // @ts-ignore */}
-          <SelectedOption className={s.toggler}>
+          <SelectedOption className={s.clickElement}>
             {selectedOption}
           </SelectedOption>
           {/*
