@@ -1,0 +1,42 @@
+@import 'variables';
+
+$hover: #e8eaed !default;
+$active: #f1f3f4 !default;
+
+:global(a[role=button]) {
+  position: relative;
+  -webkit-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $hover;
+
+    * {
+      color: #000000;
+    }
+  }
+
+  &:active:after {
+    padding: 0;
+    margin: 0;
+    opacity: 1;
+    transition: 0s;
+    background: $active;
+    overflow: hidden;
+  }
+
+  &:after {
+    content: "";
+    overflow: hidden;
+    display: block;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: all 0.8s
+  }
+}

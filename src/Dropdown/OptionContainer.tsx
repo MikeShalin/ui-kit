@@ -16,7 +16,7 @@ type TProps = {
   searchCallback?: (e: BaseSyntheticEvent | null) => void;
 };
 
-const OptionContainer = ({ children, active = true, setShow, top, search, className, searchCallback }: TProps) => (
+export const OptionContainer = ({ children, active = true, setShow, top, search, className, searchCallback }: TProps) => (
   <div
     className={cn(s.dropdown, className, 'dropdownlist', {
       [s.dropdown_active]: active,
@@ -31,5 +31,3 @@ const OptionContainer = ({ children, active = true, setShow, top, search, classN
     </div>
   </div>
 );
-
-export default OptionContainer;

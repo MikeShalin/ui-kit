@@ -12,7 +12,7 @@ type TProps = {
   className?: string;
 };
 
-const SelectedOption = ({ setShow, show, children, top, className }: TProps) => {
+export const SelectedOption = ({ setShow, show, children, top, className }: TProps) => {
   // todo стрелка зависит от пропса top
   return (
     // eslint-disable-next-line jsx-a11y/anchor-is-valid,jsx-a11y/click-events-have-key-events,jsx-a11y/interactive-supports-focus
@@ -27,5 +27,3 @@ const SelectedOption = ({ setShow, show, children, top, className }: TProps) => 
     </a>
   );
 };
-
-export default SelectedOption;

@@ -52,7 +52,7 @@ export class SimpleDropdown extends React.Component<TProps> {
           {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
           {/*
            // @ts-ignore */}
-          <SelectedOption className={s.clickElement}>
+          <SelectedOption>
             {selectedOption}
           </SelectedOption>
           {/*

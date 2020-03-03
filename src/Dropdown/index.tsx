@@ -1,7 +1,6 @@
-import Wrapper from './Wrapper';
-import SelectedOption from './SelectedOption';
-import Option from './Option';
-import OptionContainer from './OptionContainer';
+export * from './Wrapper';
+export * from './SelectedOption';
+export * from './Option';
+export * from './OptionContainer';
 export * from './SimpleDropdown';
-
-export { Wrapper, SelectedOption, Option, OptionContainer };
+//todo сделать многовложенный выпадающий список

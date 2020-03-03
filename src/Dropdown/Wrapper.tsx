@@ -16,7 +16,7 @@ type TProps = {
   className?: string;
 };
 
-class Wrapper extends React.Component<TProps>{
+export class Wrapper extends React.Component<TProps>{
   private readonly wrapperRef: any;
   constructor(props: any) {
     super(props);
@@ -57,5 +57,3 @@ class Wrapper extends React.Component<TProps>{
     );
   }
 }
-
-export default Wrapper;

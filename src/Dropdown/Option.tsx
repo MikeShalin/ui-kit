@@ -10,7 +10,7 @@ type TProps = {
   onClose: Function;
 };
 
-const Option = ({ children, onClick, disabled, onClose }: TProps) => {
+export const Option = ({ children, onClick, disabled, onClose }: TProps) => {
   const handleClick = (e: MouseEvent) => {
     onClick(e);
     onClose();
@@ -22,5 +22,3 @@ const Option = ({ children, onClick, disabled, onClose }: TProps) => {
     </a>
   );
 };
-
-export default Option;
