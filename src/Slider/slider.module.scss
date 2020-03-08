@@ -1,0 +1,98 @@
+$base-color: #ffff00 !default;
+$dark-color: #ff0000 !default;
+
+@mixin dragBorder($color) {
+  border: 1px solid $color;
+}
+
+@mixin dragBorderActive($color) {
+  border: 2px solid $color;
+}
+
+.range {
+  height: 6px;
+  width: 100%;
+  background: $base-color;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+.drag {
+  @include dragBorder(hsla(0, 0%, 59.2%, .25));
+  position: absolute;
+  margin-top: -6px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 9px;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, .15);
+  cursor: pointer;
+  z-index: 2;
+
+  &:hover {
+    @include dragBorder(rgba(255, 255, 0, 0.4));
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.value {
+  @include dragBorder(hsla(0, 0%, 59.2%, .25));
+  position: absolute;
+  left: -40px;
+  padding: 0 0 0 4px ;
+  margin-top: -6px;
+  width: 25px;
+  height: 18px;
+  border-radius: 4px;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  &:focus {
+    outline: none;
+    border: 1px solid $base-color;
+  }
+  &:hover {
+    border: 1px solid rgba(255, 255, 0, 0.4);
+  }
+}
+
+.active {
+  @include dragBorderActive($base-color);
+  &:hover {
+    @include dragBorderActive($base-color);
+  }
+}
+
+.dark.range{
+  background: $dark-color;
+
+  .drag {
+    &:hover {
+      @include dragBorder(rgba(255,0,0, 0.4));
+    }
+  }
+
+  .active {
+    @include dragBorderActive($dark-color);
+    &:hover {
+      @include dragBorderActive($dark-color);
+    }
+  }
+
+  .value {
+    &:focus {
+      outline: none;
+      border: 1px solid $dark-color;
+    }
+    &:hover {
+      border: 1px solid rgba(255,0,0, 0.4);
+    }
+  }
+
+}
