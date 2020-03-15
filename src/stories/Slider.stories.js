@@ -22,10 +22,11 @@ export const SimpleSlider = () => (
 );
 
 export const SimpleWithRange = () => (
-  <div style={{ marginTop: 30, marginLeft: 50, width: 100}}>
+  <div style={{ marginTop: 30, marginLeft: 50, width: 819}}>
     <RangeSliderUI
-      value={number('value', 10)}
+      value={number('value', 0)}
       dark={boolean('dark style', true)}
+      maxRange={number('max', 100)}
     />
   </div>
 );

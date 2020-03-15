@@ -20,15 +20,10 @@ export const RangeSlider = hocSlider(({
   onMouseMove,
   value,
   onChange,
-  step,
   min,
   max,
+  count,
 }: TProps & TState & TRef & TMethods) => {
-  console.log('lol', {
-    step,
-    min,
-    max,
-  })
   return (
   <div
     className={cn(s.range, { [s.dark]: dark })}
@@ -37,12 +32,11 @@ export const RangeSlider = hocSlider(({
   >
     <input
       type="number"
-      value={+value}
+      value={count ? count : value}
       onChange={onChange}
       className={s.value}
-      step={step && String(step)}
-      min={min && String(min)}
-      max={max && String(max)}
+      min={min}
+      max={max}
     />
     <button
       className={cn(s.drag, { [s.active]: isDrag })}

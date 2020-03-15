@@ -13,7 +13,7 @@ import {
   TOnMouseUp,
   TOnMouseMove,
   TOnChange,
-} from './types'
+} from './types';
 // todo как типизировать метод?
 export const hocSlider = (WrappedComponent: ElementType) => {
   return class extends Component<TProps, TState> {
@@ -23,7 +23,6 @@ export const hocSlider = (WrappedComponent: ElementType) => {
     private readonly handleMouseUp: TOnMouseUp;
     private readonly handleMouseMove: TOnMouseMove;
     private readonly handleChange: TOnChange;
-    private readonly step: number;
 
     constructor(props: TProps) {
       super(props);
@@ -33,14 +32,19 @@ export const hocSlider = (WrappedComponent: ElementType) => {
       this.handleMouseUp = this.onMouseUp.bind(this);
       this.handleMouseMove = this.onMouseMove.bind(this);
       this.handleChange = this.onChange.bind(this);
-      this.step = props.step || 1;
       this.state = {
         value: props.value,
         isDrag: false,
         ref: null,
+        //@ts-ignore
+        minRange: props.minRange || 0,
+        //@ts-ignore
+        maxRange: props.maxRange || 100,
+        count: props.value,
       };
     }
 
+// todo сделать с range
     componentDidUpdate(_: Readonly<TProps>, prevState: Readonly<TState>) {
       const { isDrag } = this.state;
       if (isDrag && !prevState.isDrag) {
@@ -52,15 +56,6 @@ export const hocSlider = (WrappedComponent: ElementType) => {
       }
     }
 
-    get minRange() {
-
-      // console.log(this.range.current && this.range.current.offsetLeft)
-      return this.range.current ? this.range.current.offsetLeft : 0;
-    }
-    get maxRange() {
-      // console.log(this.range.current && this.range.current.offsetWidth)
-      return this.range.current ? this.range.current.offsetWidth + this.minRange : 0;
-    }
 // @ts-ignore
     onMouseDown(e) {
       this.setState({
@@ -72,22 +67,34 @@ export const hocSlider = (WrappedComponent: ElementType) => {
     onMouseUp() {
       this.setState({ isDrag: false });
     };
+
 // @ts-ignore
     onMouseMove(e) {
       if (!this.state.isDrag) return null;
       const minRange = this.range.current.offsetLeft;
       const maxRange = this.range.current.offsetWidth + minRange;
-      if (this.state.isDrag && minRange < e.pageX && maxRange > e.pageX) {
-        this.setState({ value: e.pageX - Number(this.state.ref) });
+      const pageX = e.pageX;
+      const value = pageX - Number(this.state.ref);
+      if (this.state.isDrag && minRange <= pageX && maxRange >= pageX && value >= 0) {
+        this.setState({ value }, () => {
+          const num = value < this.state.minRange ? this.state.minRange : value;
+          const step = this.range.current.offsetWidth / this.state.maxRange;
+          const count = +(num / step).toFixed();
+          this.setState({ count });
+          //todo убрать варнинг, да и в целом убрать этот костыль снизу
+          if (maxRange === pageX) {
+            this.setState({ count: count + 1 });
+          }
+        });
       }
     };
+
 // @ts-ignore
-    onChange({ target: { value }}) {
+    onChange({ target: { value } }) {
       this.setState({ value });
     }
 
     render() {
-      console.log([this.minRange, this.maxRange])
       return <WrappedComponent
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
@@ -95,9 +102,10 @@ export const hocSlider = (WrappedComponent: ElementType) => {
         onChange={this.handleChange}
         button={this.button}
         range={this.range}
-        step={this.step}
-        min={this.minRange}
-        max={this.maxRange}
+        min={String(this.state.minRange)}
+        max={String(this.state.maxRange)}
+        value={this.state.value > 0 ? this.state.value : 0}
+        count={this.state.count}
         {...this.props}
         {...this.state}
       />;

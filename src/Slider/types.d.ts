@@ -1,15 +1,18 @@
 import React, { BaseSyntheticEvent, MouseEvent } from 'react';
 
 export type TProps = {
+  step: number;
   value: number;
   dark?: boolean;
-  step?: number;
   min?: number;
   max?: number;
 }
 
 export type TState = {
   value: number;
+  minRange: number;
+  maxRange: number;
+  count?: number;
   isDrag: boolean;
   ref: null | number;
 }

@@ -29,7 +29,6 @@ $dark-color: #ff0000 !default;
   box-shadow: 0 2px 1px rgba(0, 0, 0, .15);
   cursor: pointer;
   z-index: 2;
-
   &:hover {
     @include dragBorder(rgba(255, 255, 0, 0.4));
   }
