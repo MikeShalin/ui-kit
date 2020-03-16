@@ -1,11 +1,11 @@
 import React, { BaseSyntheticEvent, MouseEvent } from 'react';
 
 export type TProps = {
-  step: number;
   value: number;
   dark?: boolean;
   min?: number;
   max?: number;
+  maxRange?: number;
 }
 
 export type TState = {

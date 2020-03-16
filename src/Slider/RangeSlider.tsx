@@ -31,7 +31,7 @@ export const RangeSlider = hocSlider(({
     ref={range}
   >
     <input
-      type="number"
+      type="text"
       value={count ? count : value}
       onChange={onChange}
       className={s.value}

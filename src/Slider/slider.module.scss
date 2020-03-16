@@ -1,5 +1,6 @@
+@import '../variables';
+
 $base-color: #ffff00 !default;
-$dark-color: #ff0000 !default;
 
 @mixin dragBorder($color) {
   border: 1px solid $color;
@@ -29,6 +30,7 @@ $dark-color: #ff0000 !default;
   box-shadow: 0 2px 1px rgba(0, 0, 0, .15);
   cursor: pointer;
   z-index: 2;
+
   &:hover {
     @include dragBorder(rgba(255, 255, 0, 0.4));
   }
@@ -42,20 +44,23 @@ $dark-color: #ff0000 !default;
   @include dragBorder(hsla(0, 0%, 59.2%, .25));
   position: absolute;
   left: -40px;
-  padding: 0 0 0 4px ;
+  padding: 0 0 0 4px;
   margin-top: -6px;
   width: 25px;
   height: 18px;
   border-radius: 4px;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
+
   &:focus {
     outline: none;
     border: 1px solid $base-color;
   }
+
   &:hover {
     border: 1px solid rgba(255, 255, 0, 0.4);
   }
@@ -63,35 +68,37 @@ $dark-color: #ff0000 !default;
 
 .active {
   @include dragBorderActive($base-color);
+
   &:hover {
     @include dragBorderActive($base-color);
   }
 }
 
-.dark.range{
-  background: $dark-color;
+.dark.range {
+  background: $selected-dark;
 
   .drag {
     &:hover {
-      @include dragBorder(rgba(255,0,0, 0.4));
+      @include dragBorder(rgba(255, 0, 0, 0.4));
     }
   }
 
   .active {
-    @include dragBorderActive($dark-color);
+    @include dragBorderActive($selected-dark);
+
     &:hover {
-      @include dragBorderActive($dark-color);
+      @include dragBorderActive($selected-dark);
     }
   }
 
   .value {
     &:focus {
       outline: none;
-      border: 1px solid $dark-color;
+      border: 1px solid $selected-dark;
     }
+
     &:hover {
-      border: 1px solid rgba(255,0,0, 0.4);
+      border: 1px solid rgba(255, 0, 0, 0.4);
     }
   }
-
 }

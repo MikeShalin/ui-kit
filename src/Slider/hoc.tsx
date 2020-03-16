@@ -17,12 +17,12 @@ import {
 // todo как типизировать метод?
 export const hocSlider = (WrappedComponent: ElementType) => {
   return class extends Component<TProps, TState> {
-    private readonly range: TRefRange;
-    private readonly button: TRefButton;
-    private readonly handleMouseDown: TOnMouseDown;
-    private readonly handleMouseUp: TOnMouseUp;
-    private readonly handleMouseMove: TOnMouseMove;
-    private readonly handleChange: TOnChange;
+    public readonly range: TRefRange;
+    public readonly button: TRefButton;
+    public readonly handleMouseDown: TOnMouseDown;
+    public readonly handleMouseUp: TOnMouseUp;
+    public readonly handleMouseMove: TOnMouseMove;
+    public readonly handleChange: TOnChange;
 
     constructor(props: TProps) {
       super(props);

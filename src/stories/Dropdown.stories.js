@@ -1,7 +1,7 @@
 import React from 'react';
 import { withKnobs, text, boolean, array } from '@storybook/addon-knobs';
 
-import { SimpleDropdown } from 'ui-kit-local';
+import { SimpleDropdown } from '..';
 import 'ui-kit-local/dist/index.css';
 
 export default {
